@@ -8,4 +8,4 @@ data:
   vpcName: '${vpcName}'
   publicSubnetCount: '${publicsubnets}'
   privateSubnetCount: '${privatesubnets}'
-  vpcCIDR: '${vpcCIDR}''
+  vpcCIDR: '${vpcCIDR}'
