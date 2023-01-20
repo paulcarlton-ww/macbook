@@ -11,7 +11,7 @@
           spec:
             generators:
               - gitRepository:
-                  repositoryRef: beta
+                  repositoryRef: flux-system
                   files:
                     - path: beta/beta-test1.yaml
             templates:
