@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vpc-info-${vpcName}
+  namespace: default
+data:
+  awsRegion: '${awsRegion}'
+  vpcName: '${vpcName}'
+  publicSubnetCount: '${publicsubnets}'
+  privateSubnetCount: '${privatesubnets}'
+  vpcCIDR: '${vpcCIDR}''

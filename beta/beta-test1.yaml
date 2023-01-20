@@ -1,0 +1,31 @@
+metadata:
+  name: test1
+spec:
+  aws_region: us-west-2
+template: 
+  name: beta-v1
+  namespace: default
+vpcs:
+  - name: beta1
+    cidr: 10.0.0.0/16
+    publicsubnets: 3
+    privatesubnets: 3
+  - name: beta2
+    cidr: 10.10.0.0/16
+    publicsubnets: 2
+    privatesubnets: 2
+clusters:
+  - name: oracle
+    vpc_name: beta
+    version: 1.24
+  - name: matrixx
+    version: 1.23
+    vpc_name: beta
+cnfs:
+  - name: matrixx
+    version: 5232.0.13
+    cluster: matrixx
+  - name: oracle
+    version: 1.2.7
+    namespace: oracle-cnf
+    cluster: oracle
