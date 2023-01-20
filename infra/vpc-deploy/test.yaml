@@ -6,6 +6,6 @@ metadata:
 data:
   awsRegion: '${awsRegion}'
   vpcName: '${vpcName}'
-  publicSubnetCount: '${publicsubnets}'
-  privateSubnetCount: '${privatesubnets}'
+  publicSubnets: '${publicSubnets}'
+  privateSubnets: '${privateSubnets}'
   vpcCIDR: '${vpcCIDR}'
