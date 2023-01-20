@@ -258,18 +258,6 @@ rules:
   - update
   - watch
 - apiGroups:
-  - kustomize.toolkit.fluxcd.io
-  resources:
-  - kustomization
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
   - templates.weave.works
   resources:
   - gitopssets/finalizers
