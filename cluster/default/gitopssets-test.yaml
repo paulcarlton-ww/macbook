@@ -59,6 +59,6 @@ spec:
             substitute:
               awsRegion: '{{ .aws_region }}'
               vpcName: '{{ .name }}'
-              publicSubnets: \\"{{ .publicsubnets }}\\"
-              privateSubnets: \\"{{ .privatesubnets }}\\"
+              publicSubnets: "\"{{ .publicsubnets }}\""
+              privateSubnets: "\"{{ .privatesubnets }}\""
               vpcCIDR: '{{ .cidr }}'
