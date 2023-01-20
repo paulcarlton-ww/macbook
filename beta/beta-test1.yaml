@@ -7,10 +7,12 @@ template:
   namespace: default
 vpcs:
   - name: beta1
+    aws_region: us-west-2  # if we had element access I could grab this from spec above
     cidr: 10.0.0.0/16
     publicsubnets: 3
     privatesubnets: 3
   - name: beta2
+    aws_region: us-west-2 # if we had element access I could grab this from spec above
     cidr: 10.10.0.0/16
     publicsubnets: 2
     privatesubnets: 2
