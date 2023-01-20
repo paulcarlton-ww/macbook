@@ -1,0 +1,60 @@
+apiVersion: templates.weave.works/v1alpha1
+kind: GitOpsSet
+metadata:
+  labels:
+    app.kubernetes.io/name: gitopsset
+    app.kubernetes.io/instance: gitopsset-sample
+    app.kubernetes.io/part-of: gitopssets-controller
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: gitopssets-controller
+  name: vpcs
+spec:
+  generators:
+    - list:
+        elements:
+          - env: test
+            vpcs:
+              - name: beta1
+                cidr: 10.0.0.0/16
+                publicsubnets: 3
+                privatesubnets: 3
+              - name: beta2
+                cidr: 10.10.0.0/16
+                publicsubnets: 2
+                privatesubnets: 2
+            clusters:
+              - name: oracle
+                vpc_name: beta
+                version: 1.24
+              - name: matrixx
+                version: 1.23
+                vpc_name: beta
+    # - gitRepository:
+    #     repositoryRef: flux-system
+    #     directories:
+    #       - path: beta/beta-test1.yaml
+  templates:
+    - repeat: "{ .vpcs }"
+      content:
+        kind: Kustomization
+        apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+        metadata:
+          name: "{{ .vpc_name }}-deploy"
+          namespace: flux-system
+        spec:
+          interval: 10m0s
+          sourceRef:
+            kind: GitRepository
+            name: flux-system
+          path: ./infra/vpc-deploy
+          prune: true
+          wait: true
+          timeout: 5m
+          validation: client
+          postBuild:
+            substitute:
+              awsRegion: '{{ .aws_region }}'
+              vpcName: '{{ .repeat.vpc_name }}'
+              publicSubnetCount: '{{ .repeat.publicsubnets }}'
+              privateSubnetCount: '{{ .repeat.privatesubnets }}'
+              vpcCIDR: '{{ .repeat.cidr }}'
