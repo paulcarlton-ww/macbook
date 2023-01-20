@@ -16,10 +16,12 @@ spec:
           - env: test
             vpcs:
               - name: beta1
+                aws_region: eu-west-1
                 cidr: 10.0.0.0/16
                 publicsubnets: 3
                 privatesubnets: 3
               - name: beta2
+                aws_region: eu-west-1
                 cidr: 10.10.0.0/16
                 publicsubnets: 2
                 privatesubnets: 2
@@ -55,7 +57,7 @@ spec:
           postBuild:
             substitute:
               awsRegion: '{{ .aws_region }}'
-              vpcName: '{{ .repeat.vpc_name }}'
-              publicSubnetCount: '{{ .repeat.publicsubnets }}'
-              privateSubnetCount: '{{ .repeat.privatesubnets }}'
-              vpcCIDR: '{{ .repeat.cidr }}'
+              vpcName: '{{ .vpc_name }}'
+              publicSubnetCount: '{{ .publicsubnets }}'
+              privateSubnetCount: '{{ .privatesubnets }}'
+              vpcCIDR: '{{ .cidr }}'
