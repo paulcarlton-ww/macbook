@@ -24,6 +24,7 @@ spec:
         apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
         metadata:
           name: "{{ .element.env }}-demo"
+          namespace: default
           labels:
             app.kubernetes.io/name: go-demo
             app.kubernetes.io/instance: "{{ .element.env }}"
