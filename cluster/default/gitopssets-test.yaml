@@ -41,7 +41,7 @@ spec:
         kind: Kustomization
         apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
         metadata:
-          name: "{{ .name }}-deploy"
+          name: "{{ .repeat.name }}-deploy"
           namespace: default
         spec:
           interval: 10m0s
