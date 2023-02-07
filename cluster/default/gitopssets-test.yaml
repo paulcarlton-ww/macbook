@@ -41,7 +41,7 @@ spec:
         kind: Kustomization
         apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
         metadata:
-          name: '{{ .repeat.name }}-deploy'
+          name: '{{ .name }}-deploy'
           namespace: default
         spec:
           interval: 10m0s
@@ -56,8 +56,8 @@ spec:
           validation: client
           postBuild:
             substitute:
-              awsRegion: '{{ .element.aws_region }}'
-              vpcName: '{{ .repeat.name }}'
-              publicSubnets: "\"{{ .repeat.publicsubnets }}\""
-              privateSubnets: "\"{{ .repeat.privatesubnets }}\""
-              vpcCIDR: '{{ .repeat.cidr }}'
+              awsRegion: "eu-wst-1" #'{{ .element.aws_region }}'
+              vpcName: '{{ .name }}'
+              publicSubnets: "\"{{ .publicsubnets }}\""
+              privateSubnets: "\"{{ .privatesubnets }}\""
+              vpcCIDR: '{{ .cidr }}'
