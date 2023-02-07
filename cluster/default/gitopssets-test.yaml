@@ -14,14 +14,13 @@ spec:
     - list:
         elements:
           - env: test
+            aws_region: eu-west-1
             vpcs:
               - name: beta1
-                aws_region: eu-west-1
                 cidr: 10.0.0.0/16
                 publicsubnets: 3
                 privatesubnets: 3
               - name: beta2
-                aws_region: eu-west-1
                 cidr: 10.10.0.0/16
                 publicsubnets: 2
                 privatesubnets: 2
@@ -39,49 +38,26 @@ spec:
   templates:
     - repeat: "{ .vpcs }"
       content:
-        - kind: Kustomization
-          apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-          metadata:
-            name: "{{ .name }}-deploy"
-            namespace: default
-          spec:
-            interval: 10m0s
-            sourceRef:
-              kind: GitRepository
-              name: flux-system
-              namespace: flux-system
-            path: ./infra/vpc-deploy
-            prune: true
-            wait: true
-            timeout: 5m
-            validation: client
-            postBuild:
-              substitute:
-                awsRegion: '{{ .aws_region }}'
-                vpcName: '{{ .name }}'
-                publicSubnets: "\"{{ .publicsubnets }}\""
-                privateSubnets: "\"{{ .privatesubnets }}\""
-                vpcCIDR: '{{ .cidr }}'
-        - kind: Kustomization
-          apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-          metadata:
-            name: "{{ .name }}-deploy"
-            namespace: default
-          spec:
-            interval: 10m0s
-            sourceRef:
-              kind: GitRepository
-              name: flux-system
-              namespace: flux-system
-            path: ./infra/vpc-deploy
-            prune: true
-            wait: true
-            timeout: 5m
-            validation: client
-            postBuild:
-              substitute:
-                awsRegion: '{{ .aws_region }}'
-                vpcName: '{{ .name }}'
-                publicSubnets: "\"{{ .publicsubnets }}\""
-                privateSubnets: "\"{{ .privatesubnets }}\""
-                vpcCIDR: '{{ .cidr }}'
+        kind: Kustomization
+        apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+        metadata:
+          name: "{{ .repeat.name }}-deploy"
+          namespace: default
+        spec:
+          interval: 10m0s
+          sourceRef:
+            kind: GitRepository
+            name: flux-system
+            namespace: flux-system
+          path: ./infra/vpc-deploy
+          prune: true
+          wait: true
+          timeout: 5m
+          validation: client
+          postBuild:
+            substitute:
+              awsRegion: '{{ .element.aws_region }}'
+              vpcName: '{{ .repeat.name }}'
+              publicSubnets: "\"{{ .repeat.publicsubnets }}\""
+              privateSubnets: "\"{{ .repeat.privatesubnets }}\""
+              vpcCIDR: '{{ .repeat.cidr }}'
