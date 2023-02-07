@@ -60,5 +60,5 @@ spec:
               awsRegion: '{{ .element.aws_region }}'
               vpcName: '{{ .repeat.name }}'
               publicSubnets: '{{ .repeat.publicsubnets }}'
-              privateSubnets: '{ .repeat.privatesubnets }}'
+              privateSubnets: '{{ .repeat.privatesubnets }}'
               vpcCIDR: '{{ .repeat.cidr }}'
